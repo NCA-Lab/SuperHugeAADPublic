@@ -1,0 +1,122 @@
+directional_focus_decoding:
+  type: classification
+  general:
+    data:
+      init_args:
+        dataset_class: superhuge.data.datasets.EegClassifyBaseDataset
+        metadata_fields: ["label"]
+    model:
+      class_path: superhuge.model.interface.ChannelMapping1DClassifyInterface
+      # class_path: superhuge.model.interface.ChannelMixing1DClassifyInterface
+      init_args:
+        hidden_dim: 5
+        # num_mix_out_channels: 64
+        loss:
+          class_path: superhuge.model.loss.CrossEntropyLoss
+  tasks:
+    binary_leftright:
+      enable: 1
+      data:
+        init_args:
+          meta_filter_func_args:
+            - binary_leftright
+      model:
+        init_args:
+          model_args:
+            num_class: 2
+    binary_frontrear:
+      enable: 0
+      data:
+        init_args:
+          meta_filter_func_args:
+            - binary_frontrear
+      model:
+        init_args:
+          model_args:
+            num_class: 2
+    four-class:
+      enable: 0
+      data:
+        init_args:
+          meta_filter_func_args:
+            - four-class
+      model:
+        init_args:
+          model_args:
+            num_class: 4
+    eight-class:
+      enable: 0
+      data:
+        init_args:
+          meta_filter_func_args:
+            - eight-class
+      model:
+        init_args:
+          model_args:
+            num_class: 8
+
+  cross_validation:
+    unseen_test_shuffled:
+      enable: 1
+      data:
+        init_args:
+          meta_group_func: superhuge.data.metadata_processing.unseen_test_unbalanced_shuffled
+          n_folds: 4
+    leave_one_trial_out:
+      enable: 1
+      data:
+        init_args:
+          dataset_args:
+            meta_group_func: superhuge.datasets.metadata_processing.group.loto
+    leave_one_subject_out:
+      enable: 0
+      data:
+        init_args:
+          dataset_args:
+            meta_group_func: superhuge.datasets.metadata_processing.group.loso
+    leave_one_dataset_out:
+      enable: 0
+      data:
+        init_args:
+          dataset_args:
+            meta_group_func: superhuge.datasets.metadata_processing.group.lodo
+
+speech_reconstruction:
+  type: regression
+  general:
+    data:
+      init_args:
+        dataset_class: superhuge.data.datasets.EegRegressionBaseDataset
+        n_folds: 4
+        metadata_fields: ["env"]
+
+    model:
+      class_path: superhuge.model.interface.ChannelMapping1DRegressionInterface
+      init_args:
+        num_audio_features: 1
+        loss:
+          class_path: superhuge.model.loss.MSELoss
+  tasks:
+    envelope_reconstruction:
+      enable: 0
+      data:
+        init_args:
+          meta_filter_func_args:
+            - env
+
+  cross_validation:
+    leave_one_trial_out:
+      enable: 0
+      data:
+        init_args:
+          meta_group_func: superhuge.data.metadata_processing.loto
+    leave_one_subject_out:
+      enable: 0
+      data:
+        init_args:
+          meta_group_func: superhuge.data.metadata_processing.loso
+    leave_one_dataset_out:
+      enable: 0
+      data:
+        init_args:
+          meta_group_func: superhuge.data.metadata_processing.lodo
