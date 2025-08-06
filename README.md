@@ -45,4 +45,8 @@ Control as much hyperparameters as possible by yaml files.
 
 Also, we kindly remind you that
 * Remember to write a `**kwargs` in your `__init__` method. You can retrieve `num_channels` and other commonly used arguments by `kwargs["num_channels"]`. Take a look at the simple CNN example and you will find it well.
-* If your model take both EEG and audio (envelope, mel) as inputs, make sure to properly define your `forward` method by type hinting. A simple example is `from superhuge.data import EEG_TYPE, AUDIO_TYPE ... def forward(self, eeg: EEG_TYPE, audio: AUDIO_TYPE)`. 
+* If your model take both EEG and audio (envelope, mel) as inputs, make sure to properly define your `forward` method by type hinting. A simple example is `from superhuge.data import EEG_TYPE, AUDIO_TYPE ... def forward(self, eeg: EEG_TYPE, audio: AUDIO_TYPE)`.
+
+# Other comments from authors
+There are so many things to write a doc when we want to publish our toolbox. We are trying our best to cover as many corners as we can. If you find something not documented, please check the type annotations, go to their definitions and references, here from Internet and AI assistants, and feel free to write an issue.
+This package is developed based on the idea of [https://github.com/miracleyoo/pytorch-lightning-template/tree/master].
