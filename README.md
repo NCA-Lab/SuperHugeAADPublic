@@ -1,5 +1,5 @@
 ## SuperHugeAAD
-An all-in-one choice for preparing your EEG data and training your Auditory Attention Decoding models, both linear and nonlinear!
+An all-in-one choice for preparing your EEG data and training your Auditory Attention Decoding models, both linear and nonlinear! For a quick startup, please go through the readme. And the wiki provides more details of each components. Even though, please refer to each file for a comprehensive view of the specific functionality of each class or function.
 
 # Features
 * Pytorch Lightning-based developement, facilitating the advantage of (one of) the most popular Deep Learning framework and its derivative(s).
